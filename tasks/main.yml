@@ -2,18 +2,18 @@
 - name: Install package dependencies.
   package: name={{ item }} state=present
   with_items:
-    - python
+    - python3
     - unzip
 
 - set_fact:
-    aws_cli_bundle: awscli-bundle-{{ aws_cli_version }}
+    aws_cli_bundle: awscli-exe-linux-{{ aws_cli_version }}
   when: aws_cli_version != false
 
 - name: AWS CLI bundle to install.
   debug: var=aws_cli_bundle
 
 - name: Download the awscli bundle.
-  get_url: url=https://s3.amazonaws.com/aws-cli/{{ aws_cli_bundle }}.zip dest=/tmp/awscli-bundle.zip
+  get_url: url=https://awscli.amazonaws.com/{{ aws_cli_bundle }}.zip dest=/tmp/awscli-bundle.zip
   register: aws_cli_download_bundle
 
 - name: Unarchive the installer.
@@ -22,7 +22,7 @@
   register: aws_cli_unarchive_installer
 
 - name: Install awscli package.
-  shell: "{{ python_bin }} /tmp/awscli-bundle/install -i /usr/local/aws -b /usr/bin/aws"
+  shell: "/tmp/aws/install -i /usr/local/aws -b /usr/bin"
   args:
     creates: /usr/bin/aws
   when: aws_cli_unarchive_installer.changed
