@@ -6,5 +6,6 @@ aws_cli_secret_key: "<secret-key>"
 aws_cli_region: eu-west-1
 aws_cli_format: text
 aws_cli_version: false
+aws_cli_version: x86_64
 
 python_bin: "/usr/bin/python"
